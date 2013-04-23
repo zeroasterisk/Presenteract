@@ -3,5 +3,10 @@
     "git": "https://github.com/meteor/meteor.git",
     "branch": "master"
   },
-  "packages": {}
+  "packages": {
+    "router": {},
+    "chartjs": {},
+    "bootstrap-wysiwyg": {},
+    "tour": {}
+  }
 }

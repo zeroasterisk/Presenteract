@@ -1,0 +1,42 @@
+{
+  "meteor": {
+    "git": "https://github.com/meteor/meteor.git",
+    "branch": "master",
+    "commit": "1dfc7171f237a029cca74cbf25024acbf6ed5b75"
+  },
+  "dependencies": {
+    "basePackages": {
+      "router": {},
+      "chartjs": {},
+      "bootstrap-wysiwyg": {},
+      "tour": {}
+    },
+    "packages": {
+      "router": {
+        "git": "https://github.com/tmeasday/meteor-router.git",
+        "tag": "v0.5.1",
+        "commit": "32e377c7703bb119acccc859fc7296882903cbe7"
+      },
+      "chartjs": {
+        "git": "https://github.com/donskifarrell/meteor-chartjs.git",
+        "tag": "v0.0.3",
+        "commit": "cd3339ccbc99eb8fe7664a918aef25423bdaca3b"
+      },
+      "bootstrap-wysiwyg": {
+        "git": "https://github.com/mcrider/meteor-bootstrap-wysiwyg.git",
+        "tag": "v0.1.0",
+        "commit": "b9b1ffadb42b8bbfade08aaea10e4fbe890d21dd"
+      },
+      "tour": {
+        "git": "https://github.com/kidovate/meteor-bootstrap-tour.git",
+        "tag": "v0.3.2",
+        "commit": "5f1d9df8c425f919238096b97013c86cb74f72c0"
+      },
+      "page-js-ie-support": {
+        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
+      }
+    }
+  }
+}
