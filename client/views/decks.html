@@ -1,0 +1,15 @@
+<template name="decks">
+<h1>Presentations</h1>
+{{#if decks}}
+  <!-- TODO: switch to thumbnail view? -->
+  {{#each decks}}
+    {{> deckNodePublic}}
+  {{/each}}
+{{else}}
+  <p class="alert">
+    There are no available presenations right now...
+    <a href="/deckNew" class="btn btn-large btn-primary"><i class="icon-plus icon-white"></i> Add One</a>
+  </p>
+{{/if}}
+</template>
+

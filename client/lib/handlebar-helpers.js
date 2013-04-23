@@ -7,12 +7,8 @@
 (function () {
   if (typeof Handlebars !== 'undefined') {
 
-    Handlebars.registerHelper('auction', function (id) {
-      return Auctions.get(id);
-    });
-
-    Handlebars.registerHelper('item', function (id) {
-      return Items.get(id);
+    Handlebars.registerHelper('user', function () {
+      return Meteor.user();
     });
 
     Handlebars.registerHelper('getSession', function (key) {

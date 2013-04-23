@@ -7,7 +7,11 @@
     Session.set('deckId', deckId);
     if (! (_.isString(slideId) && slideId.length)) {
       // no slide provided, default to first
-      var firstSlide = Slides.find({deckId: deckId}).sort( { order:  1 } ).fetch();
+      var firstSlide = Slides.find({deckId: deckId}, {sort: { order:  1 } }).fetch()[0];
+      if (!_.isObject(firstSlide)) {
+        throw new Meteor.Error(500, 'Deck has no slides');
+        return 'decks';
+      }
       slideId = firstSlide._id;
     }
     Session.set('slideId', slideId);
@@ -18,8 +22,41 @@
     if (! (_.isString(deckId) && deckId.length)) {
       return 'decks';
     }
+    var deck = Decks.findOne({ _id: deckId});
+    if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
+      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      return 'decks';
+    }
     Session.set('deckId', deckId);
     return 'deckEdit';
+  };
+
+  deckOpen = function(deckId) {
+    if (! (_.isString(deckId) && deckId.length)) {
+      return 'decks';
+    }
+    var deck = Decks.findOne({ _id: deckId});
+    if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
+      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      return 'decks';
+    }
+    Meteor.call('deckOpen', deckId);
+    Meteor.Router.to('/deck/' + deckId);
+    return 'deck';
+  };
+
+  deckClose = function(deckId) {
+    if (! (_.isString(deckId) && deckId.length)) {
+      return 'decks';
+    }
+    var deck = Decks.findOne({ _id: deckId});
+    if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
+      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      return 'decks';
+    }
+    Meteor.call('deckClose', deckId);
+    Meteor.Router.to('/decksMine');
+    return 'decksMine';
   };
 
   deckEditSlide = function(deckId, slideId) {
@@ -37,10 +74,13 @@
   Meteor.Router.add({
     '/': 'home',
     '/decks': 'decks',
+    '/decksMine': 'decksMine',
     '/deck/:deckId': deckView,
     '/deck/:deckId/:slideId': deckView,
     '/deckNew': 'deckNew',
     '/deckEdit/:deckId': deckEdit,
+    '/deckOpen/:deckId': deckOpen,
+    '/deckClose/:deckId': deckClose,
     '/deckEditSlide/:deckId/:slideId': deckEditSlide,
   });
 

@@ -1,0 +1,51 @@
+<template name="deckNew">
+
+<h1>Create a new Presentation/Deck</h1>
+
+<form action="?" id="deckNew" class="form-horizontal">
+
+  <div class="control-group">
+    <label class="control-label">* Title</label>
+    <div class="controls">
+      <input type="text" name="title" placeholder="My Cool Presentation"
+      required="required" pattern="([a-zA-Z0-9\ \-\_\'\:\;\.\,\?\!\@\#]+)" minlength="4" maxlength="64"
+        title="Enter your title, 4-64 letters or numbers or basic punctuation, no funky characters/code">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">* Short Description</label>
+    <div class="controls">
+      <textarea rows="3" cols="20" name="short" placeholder="Want to see something awesome?"
+        required="required" pattern="[a-zA-Z0-9\ \-\_\'\:\;\.\,\?\!\@\#]" minlength="10" maxlength="512"
+        title="Enter your description, 10-512 characters, no funky characters/code"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">* Byline</label>
+    <div class="controls">
+      <input type="text" name="byline" placeholder="Your Name Here"
+        value="{{user.profile.name}}"
+        required="required" pattern="([a-zA-Z0-9\ \-\_\'\:\;\.\,]+)" minlength="4" maxlength="64"
+        title="Enter your byline, 4-64 letters or numbers or basic punctuation, no funky characters/code">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Findable</label>
+    <div class="controls">
+      <input type="checkbox" name="isFindable" value="1" checked="checked">
+      <span class="help-inline">If un-checked, the Presentation will not be listed on our site, the URL will have to be accessed directly</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Require Account</label>
+    <div class="controls">
+      <input type="checkbox" name="isAccountRequired" value="1" >
+      <span class="help-inline">If checked, only logged in users can view the Presentation</span>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn btn-large btn-primary" type="submit">Create Presentation</button>
+  </div>
+</form>
+
+</template>

@@ -1,0 +1,18 @@
+<template name="deckNodePublic">
+<div class="media">
+  <a class="pull-left decklink" href="/deck/{{_id}}">
+    <img src="http://api.qrserver.com/v1/create-qr-code/?data=http://presenteract.meteor.com/deck/{{_id}}&size=100x100" alt="qrcode to deck">
+  </a>
+  <div class="media-body">
+    <h4>
+      {{title}}
+      {{#if isOpen}}
+      <span class="badge badge-success">
+        <i class="icon-ok icon-white"></i> Open
+      </span>
+      {{/if}}
+    </h4>
+    <p class="muted">{{short}}</p>
+  </div>
+</div>
+</template>

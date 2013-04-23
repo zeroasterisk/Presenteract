@@ -10,6 +10,7 @@
     "tour": {},
     "accounts-ui-bootstrap-dropdown": {},
     "moment": {},
-    "validation": {}
+    "validation": {},
+    "x-editable-bootstrap": {}
   }
 }
