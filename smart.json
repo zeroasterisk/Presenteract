@@ -7,6 +7,9 @@
     "router": {},
     "chartjs": {},
     "bootstrap-wysiwyg": {},
-    "tour": {}
+    "tour": {},
+    "accounts-ui-bootstrap-dropdown": {},
+    "moment": {},
+    "validation": {}
   }
 }

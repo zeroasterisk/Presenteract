@@ -1,0 +1,55 @@
+<head>
+  <title>Presenteract!</title>
+  <meta name="description" content="Interactive Presentations, Real time Audience polling and feedback from phones, computers, etc">
+  <meta name="viewport" content="initial-scale=1.0">
+  <link rel="shortcut icon" href="/favicon.ico"/>
+</head>
+<body>
+
+  <div class="outer-wrapper {{currentPage}}">
+    {{> body}}
+  </div>
+
+</body>
+
+
+<template name="body">
+  {{> header}}
+  <div id="main" class="container-fluid template-{{pageName}}">
+    {{{renderPage}}}
+    {{> footer}}
+  </div>
+  {{{extraCode}}}
+</template>
+
+<template name="header">
+<header>
+  <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      {{#if deck}}
+      <a class="brand" href="/deck/{{deck._id}}">{{deck.title}}</a>
+      {{else}}
+      <a class="brand" href="/decks">Presenteract</a>
+      {{/if}}
+
+      <ul class="nav">
+        {{#if currentUser}}
+        <li><a href="/decksMine"><i class="icon-user"></i> My Presentations</a></li>
+        <li><a href="/deckNew"><i class="icon-plus"></i> New Presentation</a></li>
+        {{/if}}
+      </ul>
+
+      <div class="navbar-text pull-right">
+        {{loginButtons align="right" }}
+      </div>
+    </div>
+  </div>
+</header>
+</template>
+
+<template name="footer">
+<footer class="well">
+  &copy; <a href="http://presenteract.meteor.com">Presenteract</a> 2013
+</footer>
+</template>
+

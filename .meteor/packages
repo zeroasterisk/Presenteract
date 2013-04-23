@@ -14,10 +14,12 @@ accounts-google
 accounts-facebook
 accounts-twitter
 accounts-meetup
-accounts-ui
 bootstrap
 router
 chartjs
 bootstrap-wysiwyg
 tour
 d3
+accounts-ui-bootstrap-dropdown
+moment
+validation
