@@ -11,6 +11,7 @@
     "accounts-ui-bootstrap-dropdown": {},
     "moment": {},
     "validation": {},
-    "x-editable-bootstrap": {}
+    "x-editable-bootstrap": {},
+    "bootstrap-growl": {}
   }
 }

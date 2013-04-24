@@ -4,5 +4,8 @@ Template.decksMine.helpers({
   },
   createdNice: function() {
     return moment(this.created).fromNow();
+  },
+  slidesCount: function() {
+    return Slides.find({ deckId: this._id }).count();
   }
 });

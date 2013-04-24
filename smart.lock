@@ -13,7 +13,8 @@
       "accounts-ui-bootstrap-dropdown": {},
       "moment": {},
       "validation": {},
-      "x-editable-bootstrap": {}
+      "x-editable-bootstrap": {},
+      "bootstrap-growl": {}
     },
     "packages": {
       "router": {
@@ -55,6 +56,11 @@
         "git": "https://github.com/nate-strauser/meteor-x-editable-bootstrap.git",
         "tag": "v0.1.3",
         "commit": "ec1fc58812d9794880b483755ffc54d4a5e235f1"
+      },
+      "bootstrap-growl": {
+        "git": "https://github.com/TimHeckel/meteor-bootstrap-growl.git",
+        "tag": "v0.1.1",
+        "commit": "674fd231a46e405f8d4eb463725d8003a02374ec"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

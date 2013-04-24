@@ -83,6 +83,8 @@ MeteorJS will work with the files in any organizational method... but it helps t
     $ touch server/publish.js
     $ touch client/subscribe.js
     $ touch client/app.js
+    $ touch client/index.html
+    $ touch client/index.js
     $ touch client/lib/router.js
     $ touch client/views/home.html
     $ touch client/views/home.js
@@ -97,5 +99,16 @@ MeteorJS will work with the files in any organizational method... but it helps t
     $ touch client/views/_poll.html
     $ touch client/views/_poll.js
 
+
+Start Developing
+----------------
+
+    client/index.html
+
+Setup the basic page layout, content to be supplied by other templates, coordinated via the router.
+
+Note the seperate templates for header and footer aren't needed, but are nice to segment code.
+
+Note the special `{{loginButtons}}` code?  That's our Automatic login functionality for Accounts.
 
 

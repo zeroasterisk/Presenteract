@@ -27,4 +27,3 @@ Meteor.publish('decksForUser', function(userId) {
 });
 
 
-

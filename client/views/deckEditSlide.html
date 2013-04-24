@@ -1,0 +1,48 @@
+<template name="deckEditSlide">
+{{#with slide}}
+<ul class="breadcrumb">
+  <li><a href="/"><i class="icon-home"></i> Home</a> <span class="divider">/</span></li>
+  <li><a href="/decksMine"><i class="icon-user"></i> My Decks</a> <span class="divider">/</span></li>
+  <li><a href="/deckEdit/{{deckId}}"><i class="icon-book"></i> Deck</a> <span class="divider">/</span></li>
+  <li class="active"><i class="icon-list-alt"></i> Edit Slide</li>
+</ul>
+<h1>Edit Slide</h1>
+
+<form id="form-slide-edit" action="?" class="form-horizontal">
+
+  <div class="control-group">
+    <label class="control-label">Title</label>
+    <div class="controls">
+      <input name="title" value="{{title}}">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Short Description</label>
+    <div class="controls">
+      <textarea name="short" rows="2" maxlength="512" >{{short}}</textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">
+      Slide Content<br>
+      <a href="#" class="editSlideContent"><i class="icon-edit"></i> edit</a>
+    </label>
+    <div class="controls">
+
+
+      <!--textarea name="body" rows="10" maxlength="2048" class="wysiwyg">{{body}}</textarea-->
+      <textarea id="editor" name="body" rows="10">{{body}}</textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">Save</button>
+    &nbsp;
+    <a href="/deckEdit/{{deckId}}">Cancel</a>
+  </div>
+</form>
+
+{{/with}}
+
+
+</template>

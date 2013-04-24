@@ -1,0 +1,60 @@
+<template name="deckEdit">
+<ul class="breadcrumb">
+  <li><a href="/"><i class="icon-home"></i> Home</a> <span class="divider">/</span></li>
+  <li><a href="/decksMine"><i class="icon-user"></i> My Decks</a> <span class="divider">/</span></li>
+  <li class="active"><i class="icon-book"></i> Deck</li>
+</ul>
+<h1>{{deck.title}}</h1>
+<p>Editing Deck {{getSession 'deckId'}}</p>
+
+<h4>Slides ({{slidesCount}})</h4>
+<ul class="thumbnails">
+{{#each slides}}
+<li class="thumbnail span4 slide-thumb" style="overflow: hidden;">
+  <strong href="#" class="slide-eip" data-pk="{{_id}}"
+    data-type="text" data-inputclass="input-medium"
+    data-name="title" data-mode="inline" title="Title"
+    >{{title}}</strong>
+  <div class="pull-right hide edit-icons">
+    <a href="#" class="deleteSlide" data-toggle="tooltip" title="delete slide"><i class="icon-remove"></i></a>
+    <a href="/deckEditSlide/{{deckId}}/{{_id}}" data-toggle="tooltip" title="edit slide content"><i class="icon-edit"></i></a>
+    <a href="#" class="moveSlideUp" data-toggle="tooltip" title="move up"><i class="icon-arrow-up"></i></a>
+    <a href="#" class="moveSlideDown" data-toggle="tooltip" title="move up"><i class="icon-arrow-down"></i></a>
+  </div>
+  <br>
+  <span href="#" class="slide-eip muted" data-pk="{{_id}}"
+    data-type="textarea" data-inputclass="input-medium"
+    data-name="short" data-mode="inline" title="Short"
+    >{{short}}</span>
+</li>
+{{/each}}
+</ul>
+
+<p>
+  <a href="#" class="newSlide btn btn-success"><i class="icon-plus icon-white"></i> Add Slide</a>
+</p>
+
+{{#if getSession 'confirmSlideDeletion'}}
+{{> confirmSlideDeletion}}
+{{/if}}
+
+</template>
+
+
+<template name="confirmSlideDeletion">
+<div class="modal fade confirmSlideDeletion">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Delete Slide</h3>
+  </div>
+  <div class="modal-body">
+    <strong>{{slide.title}}</strong><br>
+    <p class="muted">{{slide.short}}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn cancel">Cancel</a>
+    <a href="#" class="btn btn-primary">Delete Slide</a>
+  </div>
+</div>
+</template>
+

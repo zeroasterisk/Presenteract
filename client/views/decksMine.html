@@ -1,5 +1,9 @@
 <template name="decksMine">
-<h1><i class="icon-user"></i> My Presentations</h1>
+<ul class="breadcrumb">
+  <li><a href="/"><i class="icon-home"></i> Home</a> <span class="divider">/</span></li>
+  <li class="active"><i class="icon-user"></i> My Decks</a></li>
+</ul>
+<h1>My Presentations</h1>
 {{#if currentUser}}
   {{#if decks}}
     {{#each decks}}
@@ -13,7 +17,12 @@
           {{#if isOpen}}
           <a href="/deckClose/{{_id}}" class="btn btn-mini"><i class="icon-pause"></i> Stop</a>
           {{else}}
+          {{#if slidesCount}}
           <a href="/deckOpen/{{_id}}" class="btn btn-mini"><i class="icon-play"></i> Start</a>
+          {{slidesCount}}
+          {{else}}
+          (no slides)
+          {{/if}}
           {{/if}}
           <br>
           <span class="label">created: {{createdNice}}</span>

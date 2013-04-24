@@ -68,7 +68,30 @@ Meteor.methods({
         { _id: deckId, owner: Meteor.userId() },
         { $set: { isOpen: false } }
         );
-  }
+  },
+
+  // create a new "blank" slide in deck
+  newSlide: function(deckId) {
+    var deck = Decks.findOne({ _id: deckId });
+    if (deck.owner != Meteor.userId()) {
+      Notify.error('Can not create slide');
+      return false;
+    }
+    var count = Slides.find({ deckId: deckId }).count();
+    return Slides.insert({
+      deckId: deckId,
+      created: moment().utc().format(),
+      order: count,
+      title: 'Slide #' + (count + 1),
+      short: '',
+      body: '',
+      thumb: '',
+      poll: [],
+      responses: []
+    });
+  },
+
+
 
 
 });

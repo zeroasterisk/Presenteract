@@ -9,7 +9,7 @@
       // no slide provided, default to first
       var firstSlide = Slides.find({deckId: deckId}, {sort: { order:  1 } }).fetch()[0];
       if (!_.isObject(firstSlide)) {
-        throw new Meteor.Error(500, 'Deck has no slides');
+        Notify.alert('Deck has no slides');
         return 'decks';
       }
       slideId = firstSlide._id;
@@ -24,7 +24,7 @@
     }
     var deck = Decks.findOne({ _id: deckId});
     if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
-      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      Notify.alert('Access denied, you are not the owner');
       return 'decks';
     }
     Session.set('deckId', deckId);
@@ -37,7 +37,7 @@
     }
     var deck = Decks.findOne({ _id: deckId});
     if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
-      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      Notify.alert('Access denied, you are not the owner');
       return 'decks';
     }
     Meteor.call('deckOpen', deckId);
@@ -51,7 +51,7 @@
     }
     var deck = Decks.findOne({ _id: deckId});
     if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
-      throw new Meteor.Error(500, 'Access denied, you are not the owner');
+      Notify.alert('Access denied, you are not the owner');
       return 'decks';
     }
     Meteor.call('deckClose', deckId);
@@ -105,7 +105,7 @@
 
   });
 
-  Meteor.Router.filter('requireDecks', {only: ['decks', 'deck']});
+  Meteor.Router.filter('requireDecks', {only: ['decks', 'deck', 'deckEdit']});
 
   Meteor.startup(function() {
     Meteor.autorun(function() {
@@ -133,7 +133,8 @@
           trackEvent(e.event, e.properties);
         });
       } else {
-        console.log('------ Loading… --------');
+        Notify.clear();
+        console.log('------ Loaded --------');
       }
     });
   });
