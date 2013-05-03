@@ -13,4 +13,8 @@ if (Meteor.isClient) {
       amplify.store('session', serverSession._id);
     }
   );
+  // helper function
+  Meteor.getServerSessionId = function() {
+    return Session.get('serverSession')._id;
+  }
 }

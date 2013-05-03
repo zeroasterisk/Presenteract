@@ -170,8 +170,83 @@ Meteor.methods({
       return false;
     }
     return PollOptions.remove({_id: pollOptionId});
-  }
+  },
 
 
 
+  // this method is defined on both the client and the server
+  //   this is done to demonstrate that a method can "run" on the client
+  //   but the real work is done on the server, the client assumes it will
+  //   work the same on the server, but if not, it gets back the information
+  //   from the server and changes the client's (assumed) state
+  // answer a poll
+  answer: function(data) {
+
+    // validate:
+    //   https://atmosphere.meteor.com/package/validation
+    //   https://github.com/oortcloud/atmosphere/blob/master/app/server/methods.js#L17
+    var errors = _.validate(data, [
+
+      _.presenceOf   ('pollId'),
+      _.lengthOf     ('pollId', { gte: 1, lte: 32 }),
+      _.presenceOf   ('deckId'),
+      _.lengthOf     ('deckId', { gte: 1, lte: 32 }),
+      _.presenceOf   ('pollOptionId'),
+      _.lengthOf     ('pollOptionId', { gte: 1, lte: 32 }),
+      _.presenceOf   ('serverSessionId'),
+      _.lengthOf     ('serverSessionId', { gte: 1, lte: 32 }),
+
+      ]);
+
+    var errorMessages = _.flatErrors(errors);
+
+    console.log('answer', data, errors);
+
+    if (errorMessages.length > 0) {
+      throw new Meteor.Error(422, "Answer could not be saved", errorMessages);
+    }
+
+    // permissions
+    var poll = Polls.findOne(data.pollId);
+    if (!_.isObject(poll)) {
+      throw new Meteor.Error(422, 'Can not answer poll, missing poll');
+    }
+    var deck = Decks.findOne(poll.deckId);
+    if (!_.isObject(deck)) {
+      throw new Meteor.Error(422, 'Can not answer poll, missing deck');
+    }
+    if (!deck.isOpen) {
+      throw new Meteor.Error(422, 'Can not answer poll, deck not open');
+    }
+    var pollOption = PollOptions.findOne(data.pollOptionId);
+    if (!_.isObject(pollOption)) {
+      throw new Meteor.Error(422, 'Can not answer poll, missing pollOption');
+    }
+    var serverSession = ServerSessions.findOne(data.serverSessionId);
+    if (!_.isObject(serverSession)) {
+      throw new Meteor.Error(422, 'Can not answer poll, missing ServerSession');
+    }
+    var existingAnswer = Answers.findOne({
+      deckId: deck._id,
+      pollId: poll._id,
+      serverSessionId: serverSession._id,
+    });
+    if (_.isObject(existingAnswer)) {
+      console.log("Update answer", data, existingAnswer);
+      return Answers.update(existingAnswer._id, {
+        pollOptionId: pollOption._id,
+             userId: Meteor.userId(),
+             modified: moment().utc().format(),
+      });
+    }
+    console.log("Inserting answer", data);
+    return Answers.insert({
+      deckId: deck._id,
+      pollId: poll._id,
+      pollOptionId: pollOption._id,
+      serverSessionId: serverSession._id,
+      userId: Meteor.userId(),
+      created: moment().utc().format(),
+    });
+  },
 });

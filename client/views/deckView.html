@@ -1,0 +1,31 @@
+<template name="deckView">
+
+{{#with deck}}
+
+<div class="deck-header">
+  <strong>{{title}}</strong>
+  <span class="muted">{{safe 'short'}}</span>
+</div>
+
+<div class="deck-slide">
+  {{> slideView}}
+</div>
+
+
+{{/with}}
+
+<div class="deck-presenter-area">
+  <ul class="thumbnails">
+    {{#each slides}}
+    <li class="thumbnail span2" style="height: 90px; overflow: hidden;">
+      <strong><a href="#setSlide" class="setSlide" data-id="{{_id}}">{{title}}</a></strong><br>
+      <span class="muted">{{safe 'short'}}</span>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+
+
+</template>
+
+

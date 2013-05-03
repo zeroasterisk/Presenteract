@@ -1,0 +1,71 @@
+<template name="slideView">
+
+{{#if slide}}
+{{#with slide}}
+
+  <div class="slide-header">
+    <h1 class="eip" data-type="text" data-mode="inline" data-name="title">{{title}}</h1>
+  </div>
+
+  <div class="slide-body">
+    <div class="row">
+      <div class="span6">
+        <div class="eip lead" data-type="textarea" data-mode="inline" data-name="short">{{safe 'short'}}</div>
+        <div class="eip" data-type="textarea" data-mode="inline" data-name="body">{{safe 'body'}}</div>
+      </div>
+      <div class="span6">
+        {{#if poll}}
+        {{#with poll}}
+          {{#if pollTakeable}}
+            {{> takePoll}}
+          {{else}}
+            {{> viewPoll}}
+          {{/if}}
+        {{/with}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+{{/with}}
+{{else}}
+  <div class="alert">No Slide Set...</div>
+{{/if}}
+
+
+</template>
+
+<template name="takePoll">
+<div class="poll take-poll">
+  <form action="?" id="takePoll">
+    <h3 class="poll">{{title}}</h3>
+    {{#each pollOptions}}
+    <label class="radio">
+        <input type="radio" name="takePoll" value="{{_id}}">
+        <strong>{{id}}</strong>.
+        <span class="option_text" data-pk="{{_id}}" data-type="text" data-name="text">{{text}}</span>
+    </label>
+    {{/each}}
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary hide anOptionSelected" disabled="true"><i class="icon-white icon-ok"></i> Submit</button>
+      <span class="noOptionSelected"><i class="icon-pause"></i> Choose an Answer</span>
+      &nbsp;
+      <a href="#" class="viewResults muted">View Responses</a>
+    </div>
+  </form>
+</div>
+</template>
+
+<template name="viewPoll">
+
+
+<div class="poll view-poll">
+  <h3 class="poll">{{title}}</h3>
+    <canvas id="viewPollChart" width="100%" height="200"></canvas>
+    {{#each pollOptions}}
+    {{id}}. {{text}} ({{getCount}})
+    {{/each}}
+  </div>
+
+</template>
+

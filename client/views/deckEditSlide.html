@@ -9,33 +9,27 @@
 
 <form id="form-slide-edit" action="?" class="form-horizontal">
 
-
-
-
-
   <div class="slide-header">
     <h1 class="eip" data-type="text" data-mode="inline" data-name="title">{{title}}</h1>
   </div>
-  <div class="row">
-    <div class="span6">
-      <div class="eip lead" data-type="textarea" data-mode="inline" data-name="short">{{safe 'short'}}</div>
-      <div class="eip" data-type="textarea" data-mode="inline" data-name="body">{{safe 'body'}}</div>
-    </div>
-    <div class="span6">
-      {{#if poll}}
-      {{#with poll}}
-      {{> editPoll}}
-      {{/with}}
-      {{else}}
-        <a href="#addPoll" class="btn addPoll"><i class="icon-plus"></i> Add Poll</a>
-      {{/if}}
+
+  <div class="slide-body">
+    <div class="row">
+      <div class="span6">
+        <div class="eip lead" data-type="textarea" data-mode="inline" data-name="short">{{safe 'short'}}</div>
+        <div class="eip" data-type="textarea" data-mode="inline" data-name="body">{{safe 'body'}}</div>
+      </div>
+      <div class="span6">
+        {{#if poll}}
+        {{#with poll}}
+        {{> editPoll}}
+        {{/with}}
+        {{else}}
+          <a href="#addPoll" class="btn addPoll"><i class="icon-plus"></i> Add Poll</a>
+        {{/if}}
+      </div>
     </div>
   </div>
-
-
-
-
-
 
   <div class="form-actions">
     <button class="btn btn-primary" type="submit">Save</button>
