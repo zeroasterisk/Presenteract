@@ -11,11 +11,6 @@ Template.deckEdit.events({
     Slides.moveSlide(this._id, 'down');
     return false;
   },
-  'click .deleteSlide': function(event) {
-    Session.set('slideId', this._id);
-    Session.set('confirmSlideDeletion', true);
-    return false;
-  },
 });
 Template.deckEdit.helpers({
   deck: function() {
@@ -27,6 +22,7 @@ Template.deckEdit.helpers({
   slidesCount: function() {
     return Slides.find({ deckId: Session.get('deckId') }).count();
   }
+
 });
 Template.deckEdit.rendered = function() {
   // setup hover-edit-icons
@@ -43,16 +39,19 @@ Template.deckEdit.rendered = function() {
       return false;
     }
     // setup in-place
-    $('.slide-eip').editable({
-      url: function(params) {
-        var d = new $.Deferred;
-        var slide = {};
-        slide[params.name] = params.value;
-        console.log('editable', params, slide, _.isObject(slide));
-       var updated = Slides.update({ _id: params.pk }, { $set: slide });
-       console.log('editable-done', updated);
-       return d.resolve();
-      }
+    $('.slide-eip').each(function(i, el) {
+      $(el).editable({
+        value: $(el).html(),
+        url: function(params) {
+          var d = new $.Deferred;
+          var slide = {};
+          slide[params.name] = params.value;
+          console.log('editable', params, slide, _.isObject(slide));
+          var updated = Slides.update({ _id: params.pk }, { $set: slide });
+          console.log('editable-done', updated);
+          return d.resolve();
+        }
+      });
     });
   });
 };
@@ -61,34 +60,15 @@ Template.deckEdit.rendered = function() {
 
 
 // ------------------------------------
-// confirmSlideDeletion Modal
+// edit slide thumb (used in slideEditing too)
 // ------------------------------------
 
-Template.confirmSlideDeletion.rendered = function() {
-  var slideId = Session.get('slideId');
-  if (! (_.isString(slideId) && slideId.length)) {
-    Session.set('confirmSlideDeletion', false);
-    Template.confirmSlideDeletion.closer();
+Template._editSlideThumb.helpers({
+  withPoll: function() {
+    var pollCount = Polls.find({ slideId: this._id }).count();
+    return (pollCount > 0);
+  },
+  short: function() {
+    return new Handlebars.SafeString(this.short);
   }
-  window.location.hash = 'confirmSlideDeletion';
-  $('.confirmSlideDeletion').modal('show');
-  $('.confirmSlideDeletion').on('hidden', function() {
-    window.location.hash = '';
-    Session.set('confirmSlideDeletion', false);
-  });
-};
-Template.confirmSlideDeletion.closer = function() {
-  $('.confirmSlideDeletion').modal('hide');
-  $('.modal-backdrop').hide('fast');
-};
-Template.confirmSlideDeletion.events({
-  'click .cancel': function(event) {
-    Template.confirmSlideDeletion.closer();
-    event.preventDefault();
-    return false;
-  }
-});
-Template.confirmSlideDeletion.slide = function() {
-  return Slides.findOne(Session.get('slideId'));
-};
-
+})

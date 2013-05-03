@@ -72,9 +72,9 @@ Meteor.methods({
 
   // create a new "blank" slide in deck
   newSlide: function(deckId) {
-    var deck = Decks.findOne({ _id: deckId });
-    if (deck.owner != Meteor.userId()) {
-      Notify.error('Can not create slide');
+    var deck = Decks.findOne(deckId);
+    if (!_.isObject(deck) || deck.owner != Meteor.userId()) {
+      throw new Meteor.Error(422, 'Can not create slide');
       return false;
     }
     var count = Slides.find({ deckId: deckId }).count();
@@ -84,13 +84,93 @@ Meteor.methods({
       order: count,
       title: 'Slide #' + (count + 1),
       short: '',
+      layout: 'a',
+      header: '',
       body: '',
-      thumb: '',
-      poll: [],
-      responses: []
+      thumb: '', //?
     });
   },
 
+  // new poll
+  newPoll: function(slideId) {
+    var slide = Slides.findOne(slideId);
+    if (!_.isObject(slide)) {
+      throw new Meteor.Error(422, 'Can not create poll, missing slide');
+      return false;
+    }
+    var deck = Decks.findOne(slide.deckId);
+    if (!_.isObject(deck) || deck.owner != Meteor.userId()) {
+      throw new Meteor.Error(422, 'Can not create slide, permissions on deck');
+      return false;
+    }
+    var deckId = deck._id;
+    var pollId = Polls.insert({
+      slideId: slide._id,
+      deckId: deckId,
+      created: moment().utc().format(),
+      title: 'Poll',
+      type: 'radio',
+      short: '',
+    });
+    if (! (_.isString(pollId) && pollId.length)) {
+      throw new Meteor.Error(422, 'Unable to create slide, unknown failure');
+    }
+    PollOptions.insert( {id: 'A', text: 'option number one', pollId: pollId, deckId: deckId} );
+    PollOptions.insert( {id: 'B', text: 'option number two', pollId: pollId, deckId: deckId} );
+    PollOptions.insert( {id: 'C', text: 'option number three', pollId: pollId, deckId: deckId} );
+    PollOptions.insert( {id: 'D', text: 'option number four', pollId: pollId, deckId: deckId} );
+    return pollId;
+  },
+
+  newPollOption: function(pollId) {
+    var poll = Polls.findOne(pollId);
+    if (!_.isObject(poll)) {
+      throw new Meteor.Error(422, 'Can not create pollOption, missing poll');
+      return false;
+    }
+    var deck = Decks.findOne(poll.deckId);
+    if (!_.isObject(deck) || deck.owner != Meteor.userId()) {
+      throw new Meteor.Error(422, 'Can not create pollOption, permissions on deck');
+      return false;
+    }
+    var deckId = deck._id;
+    var pollOptionsCount = PollOptions.find({ pollId: pollId }).count();
+    var id = PollOptions.ids[pollOptionsCount].value;
+    console.log( {id: id, text: 'new option', pollId: pollId, deckId: deckId} );
+    return PollOptions.insert( {id: id, text: 'new option', pollId: pollId, deckId: deckId} );
+  },
+
+  delPoll: function(pollId) {
+    if (! (_.isString(pollId) && pollId.length)) {
+      throw new Meteor.Error(422, 'Can no delete poll ' + pollId);
+    }
+    var poll = Polls.findOne(pollId);
+    if (! (_.isObject(poll) && _.has(poll, 'deckId'))) {
+      throw new Meteor.Error(422, 'Can no delete poll ' + pollId);
+    }
+    var deck = Decks.findOne(poll.deckId);
+    if (!_.isObject(deck) || deck.owner != Meteor.userId()) {
+      throw new Meteor.Error(422, 'Can not delete poll, permissions on deck');
+      return false;
+    }
+    return Polls.remove({_id: pollId});
+  },
+
+  delPollOption: function(pollOptionId) {
+    if (! (_.isString(pollOptionId) && pollOptionId.length)) {
+      throw new Meteor.Error(422, 'Can no delete pollOption ' + pollOptionId);
+    }
+    var pollOption = PollOptions.findOne(pollOptionId);
+    if (! (_.isObject(pollOption) && _.has(pollOption, 'deckId'))) {
+      throw new Meteor.Error(422, 'Can no delete pollOption ' + pollOptionId);
+    }
+    var deck = Decks.findOne(pollOption.deckId);
+    if (!_.isObject(deck) || deck.owner != Meteor.userId()) {
+      throw new Meteor.Error(422, 'Can not delete pollOption, permissions on deck');
+      return false;
+    }
+    return PollOptions.remove({_id: pollOptionId});
+  }
 
 
 

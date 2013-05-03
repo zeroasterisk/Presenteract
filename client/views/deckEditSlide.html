@@ -6,43 +6,94 @@
   <li><a href="/deckEdit/{{deckId}}"><i class="icon-book"></i> Deck</a> <span class="divider">/</span></li>
   <li class="active"><i class="icon-list-alt"></i> Edit Slide</li>
 </ul>
-<h1>Edit Slide</h1>
 
 <form id="form-slide-edit" action="?" class="form-horizontal">
 
-  <div class="control-group">
-    <label class="control-label">Title</label>
-    <div class="controls">
-      <input name="title" value="{{title}}">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">Short Description</label>
-    <div class="controls">
-      <textarea name="short" rows="2" maxlength="512" >{{short}}</textarea>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label">
-      Slide Content<br>
-      <a href="#" class="editSlideContent"><i class="icon-edit"></i> edit</a>
-    </label>
-    <div class="controls">
 
 
-      <!--textarea name="body" rows="10" maxlength="2048" class="wysiwyg">{{body}}</textarea-->
-      <textarea id="editor" name="body" rows="10">{{body}}</textarea>
+
+
+  <div class="slide-header">
+    <h1 class="eip" data-type="text" data-mode="inline" data-name="title">{{title}}</h1>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <div class="eip lead" data-type="textarea" data-mode="inline" data-name="short">{{safe 'short'}}</div>
+      <div class="eip" data-type="textarea" data-mode="inline" data-name="body">{{safe 'body'}}</div>
+    </div>
+    <div class="span6">
+      {{#if poll}}
+      {{#with poll}}
+      {{> editPoll}}
+      {{/with}}
+      {{else}}
+        <a href="#addPoll" class="btn addPoll"><i class="icon-plus"></i> Add Poll</a>
+      {{/if}}
     </div>
   </div>
+
+
+
+
+
 
   <div class="form-actions">
     <button class="btn btn-primary" type="submit">Save</button>
     &nbsp;
     <a href="/deckEdit/{{deckId}}">Cancel</a>
+    &nbsp;
+    <a href="#" class="deleteSlide muted" data-toggle="tooltip" title="delete slide"><i class="icon-remove"></i> delete slide</a>
   </div>
 </form>
 
 {{/with}}
 
+<ul class="thumbnails">
+{{#if slideLeft}}
+{{#with slideLeft}}
+{{> _editSlideThumb}}
+{{/with}}
+{{else}}
+<li class="thumbnail">
+  <i class="icon-play-circle"></i>
+  <span class="muted">start</span>
+</li>
+{{/if}}
+{{#if slideRight}}
+{{#with slideRight}}
+{{> _editSlideThumb}}
+{{/with}}
+{{else}}
+<li class="thumbnail">
+  <span class="muted">end</span>
+  <i class="icon-eject"></i>
+</li>
+{{/if}}
+</ul>
 
+
+{{#if getSession 'confirmSlideDeletion'}}
+{{> confirmSlideDeletion}}
+{{/if}}
 </template>
+
+
+
+<template name="confirmSlideDeletion">
+<div class="modal fade confirmSlideDeletion">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Delete Slide</h3>
+  </div>
+  <div class="modal-body">
+    <strong>{{slide.title}}</strong><br>
+    <p class="muted">{{slide.short}}</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn cancel">Cancel</a>
+    <a href="#" class="btn btn-primary">Delete Slide</a>
+  </div>
+</div>
+</template>
+
+

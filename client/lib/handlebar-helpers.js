@@ -7,6 +7,10 @@
 (function () {
   if (typeof Handlebars !== 'undefined') {
 
+    Handlebars.registerHelper('safe', function (field) {
+      return new Handlebars.SafeString(this[field]);
+    });
+
     Handlebars.registerHelper('user', function () {
       return Meteor.user();
     });

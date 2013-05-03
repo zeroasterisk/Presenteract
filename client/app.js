@@ -13,6 +13,9 @@ Deps.autorun(function () {
   });
   Meteor.subscribe('decksForUser', Meteor.userId(), function() {
   });
+  Meteor.subscribe('pollsForSlide', Session.get('slideId'), function() {
+    Session.set('PollsLoaded', true);
+  });
 });
 
 

@@ -17,7 +17,10 @@ Meteor.publish('decksPublic', function() {
 Meteor.publish('deckSelected', function(deckId) {
   return [
     Decks.find({_id: deckId}),
-    Slides.find({deckId: deckId})
+    Slides.find({deckId: deckId}),
+    Polls.find({deckId: deckId}),
+    PollOptions.find({deckId: deckId}),
+    Answers.find({deckId: deckId})
   ];
 });
 
@@ -25,5 +28,6 @@ Meteor.publish('deckSelected', function(deckId) {
 Meteor.publish('decksForUser', function(userId) {
   return Decks.find({owner: userId});
 });
+
 
 

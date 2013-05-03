@@ -1,0 +1,22 @@
+<template name="editPoll">
+<div class="poll">
+  <a href="#" class="pull-right removePoll" data-toggle="tooltip" title="remove poll"><i class="icon-remove"></i></a>
+  <h3 class="poll" data-type="text" data-name="title" data-pk="{{_id}}">{{title}}</h3>
+  <table>
+    {{#each answers}}
+    <tr>
+      <td>
+        <strong class="option_id" data-pk="{{_id}}" data-type="select" data-name="id" data-value="{{id}}">{{id}}</strong>.
+      </td>
+      <td>
+        <span class="option_text" data-pk="{{_id}}" data-type="text" data-name="text">{{text}}</span>
+      </td>
+      <td>
+        <a href="#" class="removePollOption "><i class="icon-remove"></i></a>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+  <a href="#" class="addPollOption btn btn-mini"><i class="icon-plus"></i> Add Option</a>
+</div>
+</template>
