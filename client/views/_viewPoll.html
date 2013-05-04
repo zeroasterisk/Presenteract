@@ -1,0 +1,25 @@
+<template name="viewPoll">
+<div class="poll view-poll">
+  <h3 class="poll">{{title}}</h3>
+  <canvas id="viewPollChart" width="100%" height="200"></canvas><br>
+  <table>
+    {{#each pollOptions}}
+    <tr>
+      <td>{{id}}.</td>
+      <td><i class="icon-color" style="background-color: #{{color}};"></i>&nbsp;</td>
+      <td>{{text}}
+        {{#if getCount}}
+        <strong>({{getCount}})</strong>
+        {{/if}}
+      </td>
+    </tr>
+    {{/each}}
+  </table>
+  {{#if getSession 'pollViewResults'}}
+  <div class="form-actions">
+    <a href="#" class="takePoll muted"><i class="icon-arrow-left"></i> Take Poll</a>
+  </div>
+  {{/if}}
+</div>
+</template>
+

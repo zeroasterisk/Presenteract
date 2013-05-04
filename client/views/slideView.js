@@ -1,17 +1,3 @@
-Meteor.startup(function() {
-  Deps.autorun(function() {
-    if (Meteor.Router.page() != 'deckView') {
-      return false;
-    }
-    var deck = Decks.findOne(Session.get('deckId'));
-    if (! (_.isObject(deck) && _.isString(deck.slideId) && deck.slideId.length)) {
-      console.log('autorun slideView - no slide', deck);
-      return false;
-    }
-    console.log('autorun slideView - slide set', deck);
-    return true;
-  });
-});
 Template.slideView.events({
   'click .setSlide': function(event) {
     Decks.update({_id: this.deckId}, { $set: { slideId: this._id } });
@@ -50,4 +36,17 @@ Template.slideView.helpers({
     return true;
   },
 });
-
+Meteor.startup(function() {
+  Deps.autorun(function() {
+    if (Meteor.Router.page() != 'deckView') {
+      return false;
+    }
+    var deck = Decks.findOne(Session.get('deckId'));
+    if (! (_.isObject(deck) && _.isString(deck.slideId) && deck.slideId.length)) {
+      console.log('autorun slideView - no slide', deck);
+      return false;
+    }
+    console.log('autorun slideView - slide set', deck);
+    return true;
+  });
+});

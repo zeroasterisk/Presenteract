@@ -8,6 +8,7 @@ Meteor.publish('currentUser', function() {
 Meteor.publish('decksPublic', function() {
   return Decks.find({
     'isFindable': true,
+    'isOpen': true,
     // TODO: filter by location
     // TODO: limit fields (limit scope)
   })

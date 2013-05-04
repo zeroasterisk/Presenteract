@@ -18,4 +18,8 @@ Template.deckView.helpers({
     }
     return Slides.findOne(deck.slideId);
   },
+  'isOwner': function() {
+    var deck = Decks.findOne(Session.get('deckId'));
+    return (deck.owner == Meteor.userId())
+  }
 })

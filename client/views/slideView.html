@@ -35,37 +35,5 @@
 
 </template>
 
-<template name="takePoll">
-<div class="poll take-poll">
-  <form action="?" id="takePoll">
-    <h3 class="poll">{{title}}</h3>
-    {{#each pollOptions}}
-    <label class="radio">
-        <input type="radio" name="takePoll" value="{{_id}}">
-        <strong>{{id}}</strong>.
-        <span class="option_text" data-pk="{{_id}}" data-type="text" data-name="text">{{text}}</span>
-    </label>
-    {{/each}}
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary hide anOptionSelected" disabled="true"><i class="icon-white icon-ok"></i> Submit</button>
-      <span class="noOptionSelected"><i class="icon-pause"></i> Choose an Answer</span>
-      &nbsp;
-      <a href="#" class="viewResults muted">View Responses</a>
-    </div>
-  </form>
-</div>
-</template>
 
-<template name="viewPoll">
-
-
-<div class="poll view-poll">
-  <h3 class="poll">{{title}}</h3>
-    <canvas id="viewPollChart" width="100%" height="200"></canvas>
-    {{#each pollOptions}}
-    {{id}}. {{text}} ({{getCount}})
-    {{/each}}
-  </div>
-
-</template>
 
