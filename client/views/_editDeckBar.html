@@ -1,0 +1,41 @@
+<template name="_editDeckBar">
+    <div class="media">
+        <div class="pull-left thumbnail" style="margin-right: 10px;">
+          <div class="btn-group">
+            <a href="/deckEdit/{{_id}}" class="btn btn-mini"><i class="icon-edit"></i> Edit</a>
+            {{#if isOpen}}
+            <a href="/deck/{{_id}}" class="btn btn-mini btn-primary"><i class="icon-play icon-white"></i> View/Start</a>
+            {{else}}
+            <a href="/deck/{{_id}}" class="btn btn-mini btn-info"><i class="icon-search icon-white"></i> Preview</a>
+            {{/if}}
+          </div>
+          &nbsp;
+          <br>
+          {{#if slidesCount}}
+            <span class="label label-info"><i class="icon-ok icon-white"></i> has {{slidesCount}} slides</span>
+          {{else}}
+            <span class="label label-warning"><i class="icon-remove icon-white"></i> no slides</span>
+          {{/if}}
+          <br>
+          {{#if isOpen}}
+            <a href="#" data-id="{{_id}}" class="deckClose label label-success" data-toggle="tooltip" title="Deck is open, ready to connect to... click to change"><i class="icon-ok icon-white"></i> Open</a>
+          {{else}}
+            <a href="#" data-id="{{_id}}" class="deckOpen label label-warning"><i class="icon-remove icon-white"></i> Closed</a>
+          {{/if}}
+          <br>
+          {{#if isFindable}}
+            <a href="#" data-id="{{_id}}" class="deckHide" data-toggle="tooltip" title="Deck is Findable/visible, click to change"><i class="icon-eye-open"></i> Visible</a>
+          {{else}}
+            <a href="#" data-id="{{_id}}" class="deckFindable" data-toggle="tooltip" title="Deck is hidden, click to change"><i class="icon-lock"></i> Invisible</a>
+          {{/if}}
+        </div>
+      <div class="media-body">
+          <h4 style="margin:0;">
+            <span class="eip" data-type="text" data-mode="inline" data-name="title" data-pk="{{_id}}">{{title}}</span>
+          </h4>
+          <div class="muted eip" data-type="textarea" data-mode="inline" data-name="short" data-pk="{{_id}}">{{safe 'short'}}</div>
+          <br>
+          <span class="label">created: {{createdNice}}</span>
+      </div>
+    </div>
+</template>

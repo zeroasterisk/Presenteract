@@ -13,15 +13,14 @@ accounts-base
 accounts-google
 accounts-facebook
 accounts-twitter
-accounts-meetup
 bootstrap
 router
 chartjs
 tour
 d3
-accounts-ui-bootstrap-dropdown
 moment
 validation
 x-editable-bootstrap
 bootstrap-growl
 amplify
+accounts-ui

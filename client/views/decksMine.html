@@ -7,35 +7,7 @@
 {{#if currentUser}}
   {{#if decks}}
     {{#each decks}}
-    <div class="media">
-      <a class="pull-left decklink" href="/deck/{{_id}}">
-        <img src="http://api.qrserver.com/v1/create-qr-code/?data=http://presenteract.meteor.com/deck/{{_id}}&size=40x40" alt="qrcode to deck">
-      </a>
-      <div class="media-body">
-        <div class="pull-left" style="margin-right: 10px;">
-          <a href="/deckEdit/{{_id}}" class="btn btn-mini"><i class="icon-edit"></i> Edit</a>
-          {{#if isOpen}}
-          <a href="/deckClose/{{_id}}" class="btn btn-mini"><i class="icon-pause"></i> Stop</a>
-          {{else}}
-          {{#if slidesCount}}
-          <a href="/deckOpen/{{_id}}" class="btn btn-mini"><i class="icon-play"></i> Start</a>
-          {{slidesCount}}
-          {{else}}
-          (no slides)
-          {{/if}}
-          {{/if}}
-          <br>
-          <span class="label">created: {{createdNice}}</span>
-        </div>
-        <h4 style="margin:0;">
-          <!-- TODO: make editable w/ http://vitalets.github.io/x-editable/docs.html#editable -->
-          {{title}}
-        </h4>
-        <p class="muted">
-          {{short}}
-        </p>
-      </div>
-    </div>
+      {{> _editDeckBar}}
     {{/each}}
   {{else}}
     <p class="alert">

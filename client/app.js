@@ -8,11 +8,14 @@ Meteor.subscribe('decksPublic', function() {
 
 Session.set('SlidesLoaded', false);
 Deps.autorun(function () {
+
   Meteor.subscribe('deckSelected', Session.get('deckId'), function() {
     Session.set('SlidesLoaded', true);
   });
+
   Meteor.subscribe('decksForUser', Meteor.userId(), function() {
   });
+
   Meteor.subscribe('pollsForSlide', Session.get('slideId'), function() {
     Session.set('PollsLoaded', true);
   });

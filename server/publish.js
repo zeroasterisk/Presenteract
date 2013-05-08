@@ -26,9 +26,14 @@ Meteor.publish('deckSelected', function(deckId) {
 });
 
 // Multiple decks, based on the logged in userId
+//   Also get all the slides for the decks which are found for the user
 Meteor.publish('decksForUser', function(userId) {
-  return Decks.find({owner: userId});
+  var decks = Decks.find({owner: userId}, {fields: {_id: 1}}).fetch();
+  var deckIds = _.map(decks, function (deck) { return deck._id });
+  return [
+    Decks.find({owner: userId}),
+    Slides.find({deckId: { $in: deckIds }})
+  ];
 });
-
 
 

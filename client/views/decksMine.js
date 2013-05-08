@@ -9,3 +9,5 @@ Template.decksMine.helpers({
     return Slides.find({ deckId: this._id }).count();
   }
 });
+
+

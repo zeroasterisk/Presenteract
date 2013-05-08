@@ -30,7 +30,7 @@ Template.viewPoll.doChart = function(pollId) {
       animationSteps: 60,
     };
     var ctx = $("#viewPollChart").get(0).getContext("2d");
-    Template.viewPoll.chart = new Chart(ctx).Pie(data, options);
+    Template.viewPoll.chart = new Chart(ctx).Doughnut(data, options);
     console.log('doChart', pollId, pollOptions, data, ctx, options, Template.viewPoll.chart);
     return true;
 }

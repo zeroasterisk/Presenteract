@@ -1,3 +1,7 @@
+/**
+ * Server only helpers
+ *
+ */
 
 _.mixin(_.string.exports());
 
@@ -8,10 +12,6 @@ _.mixin({
       return doc;
     },
 
-    flatErrors: function(errors) {
-      return Array.prototype.concat.apply([], _.values(errors))
-    },
-
     parseAuthor: function(rawAuthor) {
       var author = rawAuthor;
       if (_.isString(rawAuthor)) {
@@ -19,7 +19,7 @@ _.mixin({
         author = {
           name: _.trim(authorParts[1])
         };
-        
+
         if (authorParts[2])
           author.email = _.trim(authorParts[2], '<>');
 
@@ -28,6 +28,7 @@ _.mixin({
       }
 
       return author;
-    }
+    },
 
 });
+

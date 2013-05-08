@@ -4,8 +4,10 @@
   <li><a href="/decksMine"><i class="icon-user"></i> My Decks</a> <span class="divider">/</span></li>
   <li class="active"><i class="icon-book"></i> Deck</li>
 </ul>
-<h1>{{deck.title}}</h1>
-<p>Editing Deck {{getSession 'deckId'}}</p>
+<h3>Editing Deck {{getSession 'deckId'}}</h3>
+{{#with deck}}
+{{> _editDeckBar}}
+{{/with}}
 
 <h4>Slides ({{slidesCount}})</h4>
 <ul class="thumbnails">

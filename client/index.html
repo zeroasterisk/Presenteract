@@ -26,21 +26,37 @@
 <header>
   <div class="navbar navbar-static-top">
     <div class="navbar-inner">
-      {{#if deck}}
-      <a class="brand" href="/deck/{{deck._id}}">{{deck.title}}</a>
-      {{else}}
-      <a class="brand" href="/decks">Presenteract</a>
-      {{/if}}
-
-      <ul class="nav">
-        {{#if currentUser}}
-        <li><a href="/decksMine"><i class="icon-user"></i> My Presentations</a></li>
-        <li><a href="/deckNew"><i class="icon-plus"></i> New Presentation</a></li>
+      <div class="container navbar-responsive-container">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        {{#if deck}}
+        <a class="brand" href="/deck/{{deck._id}}">
+          <img src="/icon.png" alt="Logo" width="20">
+          {{deck.title}}
+        </a>
+        {{else}}
+        <a class="brand" href="/decks">
+          <img src="/icon.png" alt="Logo" width="20">
+          Presenteract
+        </a>
         {{/if}}
-      </ul>
-
-      <div class="navbar-text pull-right">
-        {{loginButtons align="right" }}
+        <div class="navbar-text pull-right">
+          {{loginButtons align="right" }}
+        </div>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            {{#if currentUser}}
+            <li><a href="/decksMine"><i class="icon-user"></i> My Presentations</a></li>
+            <li><a href="/deckNew"><i class="icon-plus"></i> New Presentation</a></li>
+            {{else}}
+            <li><a href="#">Login to create/edit/run Presenations</a></li>
+            {{/if}}
+          </ul>
+        </div>
       </div>
     </div>
   </div>

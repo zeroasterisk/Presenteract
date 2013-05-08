@@ -31,34 +31,6 @@
     return 'deckEdit';
   };
 
-  deckOpen = function(deckId) {
-    if (! (_.isString(deckId) && deckId.length)) {
-      return 'decks';
-    }
-    var deck = Decks.findOne({ _id: deckId});
-    if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
-      Notify.alert('Access denied, you are not the owner');
-      return 'decks';
-    }
-    Meteor.call('deckOpen', deckId);
-    Meteor.Router.to('/deck/' + deckId);
-    return 'deck';
-  };
-
-  deckClose = function(deckId) {
-    if (! (_.isString(deckId) && deckId.length)) {
-      return 'decks';
-    }
-    var deck = Decks.findOne({ _id: deckId});
-    if (! (_.isObject(deck) && deck.owner == Meteor.userId())) {
-      Notify.alert('Access denied, you are not the owner');
-      return 'decks';
-    }
-    Meteor.call('deckClose', deckId);
-    Meteor.Router.to('/decksMine');
-    return 'decksMine';
-  };
-
   deckEditSlide = function(deckId, slideId) {
     if (! (_.isString(deckId) && deckId.length)) {
       return 'decks';
@@ -73,14 +45,13 @@
 
   Meteor.Router.add({
     '/': 'home',
+    '/about': 'about',
     '/decks': 'decks',
     '/decksMine': 'decksMine',
     '/deck/:deckId': deckView,
     '/deck/:deckId/:slideId': deckView,
     '/deckNew': 'deckNew',
     '/deckEdit/:deckId': deckEdit,
-    '/deckOpen/:deckId': deckOpen,
-    '/deckClose/:deckId': deckClose,
     '/deckEditSlide/:deckId/:slideId': deckEditSlide,
   });
 
@@ -95,9 +66,17 @@
       return 'user_signin';
     },
 
-    // require the auctions collections subscription to have been loaded
+    // require the collections
     requireDecks: function(page) {
       if (Session.get('DecksLoaded')) {
+        return page;
+      }
+      return 'loading';
+    },
+
+    // require the collections
+    requireSlides: function(page) {
+      if (Session.get('SlidesLoaded')) {
         return page;
       }
       return 'loading';
@@ -106,6 +85,7 @@
   });
 
   Meteor.Router.filter('requireDecks', {only: ['decks', 'deck', 'deckEdit']});
+  Meteor.Router.filter('requireSlides', {only: ['deck', 'deckEdit']});
 
   Meteor.startup(function() {
     Meteor.autorun(function() {
