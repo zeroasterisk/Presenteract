@@ -51,12 +51,17 @@
         {{/if}}
         <div class="nav-collapse collapse">
           <ul class="nav">
-            {{#if currentUser}}
-            <li><a href="/decksMine"><i class="icon-user"></i> My Presentations</a></li>
-            <li><a href="/deckNew"><i class="icon-plus"></i> New Presentation</a></li>
+            {{#if isLoginAllowed}}
+              {{#if currentUser}}
+                <li><a href="/decksMine"><i class="icon-user"></i> My Presentations</a></li>
+                <li><a href="/deckNew"><i class="icon-plus"></i> New Presentation</a></li>
+              {{else}}
+                <li><a href="#">Login to create/edit/run Presenations</a></li>
+              {{/if}}
             {{else}}
-            <li><a href="#">Login to create/edit/run Presenations</a></li>
+              <li><a href="#" class="muted">Audience Only in App</a></li>
             {{/if}}
+            <li><a href="/about"><i class="icon-question-sign"></i> About</a></li>
           </ul>
         </div>
       </div>
@@ -68,6 +73,14 @@
 <template name="footer">
 <footer class="well">
   &copy; <a href="http://presenteract.meteor.com">Presenteract</a> 2013
+  <div class="pull-right muted">
+    <small>
+    Built with
+    <a href="http://meteor.com">MeteorJS</a>
+    <a href="http://phonegap.com">PhoneGap</a>
+    <a href="/about">More...</a>
+    </small>
+  </div>
 </footer>
 </template>
 
