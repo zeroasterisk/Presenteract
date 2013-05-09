@@ -44,9 +44,11 @@
           Presenteract
         </a>
         {{/if}}
+        {{#if isLoginAllowed}}
         <div class="navbar-text pull-right">
           {{loginButtons align="right" }}
         </div>
+        {{/if}}
         <div class="nav-collapse collapse">
           <ul class="nav">
             {{#if currentUser}}
