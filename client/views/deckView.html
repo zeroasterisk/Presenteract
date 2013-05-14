@@ -14,11 +14,11 @@
 {{#if isOwner}}
 <div class="deck-presenter-area well">
   {{#if prevSlideId}}
-  <a href="#setSlide" class="setSlide" data-id="{{prevSlideId}}"><i class="icon-arrow-left"></i></a>
+  <a href="#setSlide" class="setSlide setSlidePrev" data-id="{{prevSlideId}}"><i class="icon-arrow-left"></i></a>
   {{/if}}
   <strong>on slide {{currentSlideInt}} out of {{slidesCount}}</strong>
   {{#if nextSlideId}}
-  <a href="#setSlide" class="setSlide" data-id="{{nextSlideId}}"><i class="icon-arrow-right"></i></a>
+  <a href="#setSlide" class="setSlide setSlideNext" data-id="{{nextSlideId}}"><i class="icon-arrow-right"></i></a>
   {{/if}}
   <ul class="thumbnails">
     {{#each slides}}
@@ -28,6 +28,7 @@
     </li>
     {{/each}}
   </ul>
+  <div class="muted">Keyboard nav: [left], [right] (switch slides)</div>
 </div>
 {{/if}}
 

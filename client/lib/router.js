@@ -116,6 +116,10 @@
         Notify.clear();
         console.log('------ Loaded --------');
       }
+      // Mousetrap keyboard nav
+      try {
+        Mousetrap.pause();
+      } catch(e) {}
     });
   });
 }());

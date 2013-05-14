@@ -115,10 +115,10 @@ Meteor.methods({
     if (! (_.isString(pollId) && pollId.length)) {
       throw new Meteor.Error(422, 'Unable to create slide, unknown failure');
     }
-    PollOptions.insert( {id: 'A', text: 'option number one', pollId: pollId, deckId: deckId} );
-    PollOptions.insert( {id: 'B', text: 'option number two', pollId: pollId, deckId: deckId} );
-    PollOptions.insert( {id: 'C', text: 'option number three', pollId: pollId, deckId: deckId} );
-    PollOptions.insert( {id: 'D', text: 'option number four', pollId: pollId, deckId: deckId} );
+    PollOptions.insert( {id: 'A', text: 'option number one', pollId: pollId, deckId: deckId, color: 'A4C400'} );
+    PollOptions.insert( {id: 'B', text: 'option number two', pollId: pollId, deckId: deckId, color: '60A917'} );
+    PollOptions.insert( {id: 'C', text: 'option number three', pollId: pollId, deckId: deckId, color: '008A00'} );
+    PollOptions.insert( {id: 'D', text: 'option number four', pollId: pollId, deckId: deckId, color: '00ABA9'} );
     return pollId;
   },
 
