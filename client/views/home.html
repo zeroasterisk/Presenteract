@@ -1,6 +1,6 @@
 <template name="home">
 {{#if decks}}
-  <h2>Open Presentations</h2>
+  <h2>Presentations</h2>
   {{#each decks}}
     {{> deckNodePublic}}
   {{/each}}
@@ -9,13 +9,13 @@
 <div class="row">
   <div class="span12">
     <h1 class="pull-left">Interactive Presentations</h1>
-    <img src="/icon.png" alt="Logo" class="pull-left">
   </div>
 </div>
 
 <div class="row">
   <div class="span6">
     <p class="lead">
+      <img src="/icon.png" alt="Logo" class="pull-left">
       Simple slideshows via the web, in sync on the phone/tablet/computer of audience members.
     </p>
   </div>
