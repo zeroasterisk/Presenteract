@@ -23,9 +23,56 @@
   </div>
 </div>
 
+{{#if onApp}}
+  {{> onAppNote}}
+{{else}}
+  {{#if onDevice}}
+    {{> onDeviceNote}}
+  {{else}}
+    {{> onBrowserNote}}
+  {{/if}}
+{{/if}}
+
+</template>
+
+
+
+
+<template name="onAppNote">
+<div class="media">
+  <a class="pull-left" href="#">
+    <img src="http://s3.amazonaws.com/rapgenius/1291131680_two-thumbs-up.jpg" width="200">
+  </a>
+  <div class="media-body">
+    <h4>Great!  It appears you are using the Presenteract App</h4>
+    <p>You can also get to this from any browser at <span class="code">http://presenteract.meteor.com</span></p>
+  </div>
+</div>
+</template>
+
+<template name="onDeviceNote">
+<div class="media">
+  <a class="pull-left" href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=646279445&mt=8">
+    <img src="http://apptitudenola.com/wp-content/uploads/2012/11/appstore.png" width="200" class="media-object">
+  </a>
+  <div class="media-body">
+    <p>You may use this in your browser, or you can get the App from iTunes</p>
+  </div>
+</div>
+<div class="media">
+  <a class="pull-left" href="https://play.google.com/store/apps/details?id=com.meteor.presenteract">
+    <img src="http://blog.soonr.com/wp-content/uploads/2013/03/Google-Play-Badge.png" width="200" class="media-object">
+  </a>
+  <div class="media-body">
+    <p>You may use this in your browser, or you can get the App from Google Play</p>
+  </div>
+</div>
+</template>
+
+<template name="onBrowserNote">
 <div class="media">
   <a class="pull-left" href="http://presenteract.meteor.com">
-    <img src="http://api.qrserver.com/v1/create-qr-code/?data=http://presenteract.meteor.com&size=200x200" alt="qrcode to presenteract.meteor.com">
+    <img src="http://api.qrserver.com/v1/create-qr-code/?data=http://presenteract.meteor.com&size=200x200" width="200" class="media-object" alt="qrcode to presenteract.meteor.com">
   </a>
   <div class="media-body">
     <h4>Get the App now, or load the page</h4>

@@ -22,7 +22,7 @@ if (navigator.userAgent.match(/(iPad|iPhone|iOS)/gi) != null) {
 } else if (navigator.userAgent.match(/(Android)/gi) != null) {
   deviceBase = 'android';
 }
-
+Session.set('deviceBase', deviceBase);
 if (deviceBase == 'other') {
   Session.set('cordovaStatus', 'aborted');
   Session.set('cordovaLoaded', true);

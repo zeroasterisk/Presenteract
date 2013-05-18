@@ -8,6 +8,9 @@
   if (typeof Handlebars !== 'undefined') {
 
     Handlebars.registerHelper('safe', function (field) {
+      if (! (_.isString(this[field]))) {
+        return '';
+      }
       return new Handlebars.SafeString(this[field]);
     });
 

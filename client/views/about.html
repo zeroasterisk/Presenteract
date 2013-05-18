@@ -1,37 +1,49 @@
 <template name="about">
 <h1>About Presenteract</h1>
 <p class="lead">Presenteract is a project to facilitate interactive presentations, where the audience can see and interact with slides from their phone/device/laptop.</p>
-<h2>Audience</h2>
+<h2 id="audience">Audience</h2>
 <p>Connect to the currently "open" deck, for this presentaiton.  Often there is a QR code or a URL provided to make this simpler.</p>
 <p>Wait for the Presenter to change slides for you.</p>
 <p>Polls should be very simple, just choose an option and submit.</p>
-<h2>Presenters</h2>
-<p>To present, you must login, via Facebook or via Google.  Once logged in, you'll have an option for "My Presentations" and the ability to add new ones.</p>
-<p>New Deck/Presenations will be created without any slides.  You must add at least one slide to be able to use it.</p>
-<p>Only "Open" Presenations are available to audience members.  You can edit Presenations while open, and audience members should get your changes automatically synced.</p>
-<p>Only the "owner" / "creator" of a Presenation can control/run it.</p>
-<h2>Help / Contact</h2>
+{{> onDeviceNote}}
+
+<h2 id="presenter">Presenters</h2>
+<p class="alert alert-info"><i class="icon-info-sign"></i> For now, you use a browser to Present, not the app... :( </a>
+<p>To present, you <strong>must login</strong>, via Facebook or via Google (link on the right side of the header).  Once logged in, you'll have an option for "My Presentations" and the ability to add new ones.</p>
+<p>New Decks/Presenations will be created without any slides.  You must add at least one slide to be able to use it.</p>
+<p>
+  <span class="label label-success"><i class="icon-ok icon-white"></i> Open</span> Presenations are available to audience members.  If it's not Open, it's not available.<br>
+  <span class="label label-warning"><i class="icon-remove icon-white"></i> Closed</span> Presenations can easily be opened, as long as they contain slides.  Just click on the the word "Closed" to toggle it to "Open".</p>
+<p>
+  <i class="icon-eye-open"></i> Visible Presentations will show up on the homepage while open.<br>
+  <i class="icon-lock"></i> Invisible Presentations will not, but can still be accessed via URL/QRcode.
+</p>
+<p>You can edit Presenations &amp; Slides while open, and audience members should get your changes automatically synced.</p>
+<p>Only the "owner" / "creator" of a Presenation can control/run it.  Right now, that's only one person, you... we may open this up to allow you to share ownership with others... Let us know if this is important to you...</p>
+
+<h2 id="help">Help / Contact</h2>
 <p><a href="https://github.com/zeroasterisk/Presenteract/issues">Bug Reports and Feature Requests</a> are available.  If there is a significant need, we will improve this to a knowledge base.</p>
-<p>Developers, the code is available on <a href="https://github.com/zeroasterisk/Presenteract">GitHub</a></p>
+<p>Developers, the code is available on <a href="https://github.com/zeroasterisk/Presenteract">GitHub</a>. Pull Requests are appriciated.</p>
+
 <h2>Built With</h2>
 <div class="row">
   <div class="span4">
     <h3><a href="http://meteor.com">MeteorJS</a></h3>
-    <p>Wow. At every step of the way I've been impressed by MeteorJS.  The framework is exception in the functionality it provides users in the application.  It is also very easy to work in and includes tons of tools for developers.</p>
+    <p>Wow. At every step of the way I've been impressed by MeteorJS.  The framework is exceptional, every time I work with it, I'm more impressed.  It is also very easy to develop in and includes amazing tools right out of the box.  I can't recommend it enough.</p>
   </div>
   <div class="span4">
-    <h3><a href="http://phonegap.com">PhoneGap</a></h3>
-    <p>PhoneGap is an excellent project, wrapping web applications into mobile device "apps".</p>
+    <h3><a href="http://phonegap.com">Cordova / PhoneGap</a></h3>
+    <p>Apache Cordova / PhoneGap is an excellent project, wrapping web applications into mobile device "apps".  A browser as an App, with a JavaScript API to native device functionality.</p>
   </div>
   <div class="span4">
     <h3><a href="http://twitter.github.io/">Twitter Bootstrap</a></h3>
-    <p>This Excellent and Prolific CSS framework makes createing attractive, standardized, responsive, and very functional web applications easy.</p>
+    <p>This Excellent and Prolific CSS framework makes creating attractive, standardized, responsive, and very functional web applications easy.</p>
   </div>
 </div>
 <div class="row">
   <div class="span4">
     <h4><a href="http://jQuery.com">jQuery</a></h4>
-    <p>Who doesn't use jQuery?  In fact, we don't use it a ton, because MeteorJS does most of the lifting, but we still use jQuery to work with the DOM a bit.</p>
+    <p>Who doesn't use jQuery?  In fact, we don't use it a ton, because MeteorJS does most of the heavy lifting (and much of the light work too), but we still use jQuery to work with the DOM a bit.</p>
   </div>
   <div class="span4">
     <h4><a href="http://underscorejs.com">UnderscoreJS</a></h4>
@@ -48,4 +60,21 @@
     <p>For the admin interface, we have a "Click to Edit" or "Edit in Place" interface provided by X-Editable.  It rocks!</p>
   </div>
 </div>
+
+<h2>Device Information</h2>
+<p class="muted">Ignore the following information... I doubt you'll ever need it.</p>
+<dl class="dl-horizontal">
+  <dt>deviceBase</dt>
+  <dd>{{getSession 'deviceBase'}}</dd>
+  <dt>cordovaLoaded</dt>
+  <dd>{{getSession 'cordovaLoaded'}}</dd>
+  <dt>cordovaStatus</dt>
+  <dd>{{getSession 'cordovaStatus'}}</dd>
+  <dt>DecksLoaded</dt>
+  <dd>{{getSession 'DecksLoaded'}}</dd>
+  <dt>SlidesLoaded</dt>
+  <dd>{{getSession 'SlidesLoaded'}} <small class="muted">(only loaded when deck selected)</small></dd>
+  <dt>PollsLoaded</dt>
+  <dd>{{getSession 'PollsLoaded'}} <small class="muted">(only loaded when slide selected)</small></dd>
+</dl>
 </template>

@@ -27,3 +27,30 @@ if (Meteor.isServer) {
   });
 }
 
+// Sometimes we need to know what the numerical index is for the current slide
+Decks.slideIndex = function(deckId, slideId) {
+    var deck = Decks.findOne(deckId);
+    if (! (_.isString(deck.slideId) && deck.slideId.length)) {
+      // invalid deck, return 1
+      return 1;
+    }
+    if (! (_.isString(slideId) && slideId.length)) {
+      // no slideId passed in, use deck.slideId
+      slideId = deck.slideId;
+    }
+    // get all slides
+    var slides = Slides.find(
+        { deckId: deck._id },
+        { sort: { order: 1 }, fields: { _id: 1 }}
+        ).fetch();
+    // can't use for loops here
+    //   http://stackoverflow.com/questions/15494390/metor-blade-template-throws-second-landmark-in-same-branch-exception-in-for-lo
+    var i = 0, slideIndex = 1;
+    _.each(slides, function(slide) {
+      i++;
+      if (slide._id == deck.slideId) {
+        slideIndex = i;
+      }
+    });
+    return slideIndex;
+};

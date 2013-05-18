@@ -27,7 +27,7 @@ Template.deckView.helpers({
     return Slides.find({deckId: Session.get('deckId')}).count();
   },
   'slides': function() {
-    return Slides.find({deckId: Session.get('deckId')}, { sort: { order: 1 } }).fetch();
+    return Slides.forDeck(Session.get('deckId'));
   },
   'slide': function() {
     var deck = Decks.findOne(Session.get('deckId'));
@@ -37,61 +37,28 @@ Template.deckView.helpers({
     return Slides.findOne(deck.slideId);
   },
   'currentSlideInt': function() {
-    var deck = Decks.findOne(Session.get('deckId'));
-    if (! (_.isString(deck.slideId) && deck.slideId.length)) {
-      return 1;
-    }
-    var slides = Slides.find(
-        {deckId: Session.get('deckId')},
-        { sort: { order: 1 }, fields: { _id: 1 }}
-        ).fetch();
-    for (var i = 0; i < slides.length; i++) {
-      if (slides[i]._id == deck.slideId) {
-        return i + 1;
-      }
-    }
-    return 1;
+    return Decks.slideIndex(Session.get('deckId'));
   }
 });
+
+
 // implemented as directly callable methods on the template
 //   useful for self-referencing
 Template.deckView.prevSlideId = function() {
-  var deck = Decks.findOne(Session.get('deckId'));
-  if (! (_.isObject(deck) && _.has(deck, 'slideId') && _.isString(deck.slideId) && deck.slideId.length)) {
+  var currentIndex = Decks.slideIndex(Session.get('deckId'));
+  if (currentIndex < 2) {
     return '';
   }
-  var slides = Slides.find(
-      {deckId: Session.get('deckId')},
-      { sort: { order: 1 }, fields: { _id: 1 }}
-      ).fetch();
-  for (var i = 0; i < slides.length; i++) {
-    if (slides[i]._id == deck.slideId) {
-      if (i < 1) {
-        return '';
-      }
-      return slides[(i - 1)]._id;
-    }
-  }
-  return '';
+  var slides = Slides.forDeck(Session.get('deckId'));
+  return slides[(currentIndex - 2)]._id;
 };
 Template.deckView.nextSlideId = function() {
-  var deck = Decks.findOne(Session.get('deckId'));
-  if (! (_.isObject(deck) && _.has(deck, 'slideId') && _.isString(deck.slideId) && deck.slideId.length)) {
+  var currentIndex = Decks.slideIndex(Session.get('deckId'));
+  var slides = Slides.forDeck(Session.get('deckId'));
+  if (currentIndex >= slides.length) {
     return '';
   }
-  var slides = Slides.find(
-      {deckId: Session.get('deckId')},
-      { sort: { order: 1 }, fields: { _id: 1 }}
-      ).fetch();
-  for (var i = 0; i < slides.length; i++) {
-    if (slides[i]._id == deck.slideId) {
-      if ((i + 1) == slides.length) {
-        return '';
-      }
-      return slides[(i + 1)]._id;
-    }
-  }
-  return '';
+  return slides[currentIndex]._id;
 };
 Template.deckView.isOwner = function() {
   var deck = Decks.findOne(Session.get('deckId'));
@@ -99,6 +66,7 @@ Template.deckView.isOwner = function() {
 };
 // stand alone callable version of setSlide event
 //   can be triggered via keyboard nav
+//   only works if .setSlideNext is visible & has data('id')
 Template.deckView.setSlideNext = function() {
   if (!$(".setSlideNext").is(":visible")) {
     return false;
@@ -111,6 +79,7 @@ Template.deckView.setSlideNext = function() {
 }
 // stand alone callable version of setSlide event
 //   can be triggered via keyboard nav
+//   only works if .setSlidePrev is visible & has data('id')
 Template.deckView.setSlidePrev = function() {
   if (!$(".setSlidePrev").is(":visible")) {
     return false;

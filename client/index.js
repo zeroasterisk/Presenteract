@@ -10,3 +10,8 @@ Template.header.helpers({
     return true;
   }
 });
+Template.footer.helpers({
+  'version': function() {
+    return Meteor.appVersion;
+  }
+});

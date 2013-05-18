@@ -22,6 +22,11 @@ if (Meteor.isServer) {
   });
 }
 
+// helper to get standardized select for all slides for a deck, sorted
+Slides.forDeck = function(deckId) {
+  return Slides.find({deckId: Session.get('deckId')}, { sort: { order: 1 } }).fetch();
+}
+
 // helpful methods for editing
 // (allow will restrict functionality)
 
