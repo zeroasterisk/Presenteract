@@ -36,6 +36,7 @@ Template.slideView.helpers({
     return true;
   },
 });
+/*
 Meteor.startup(function() {
   Deps.autorun(function() {
     if (Meteor.Router.page() != 'deckView') {
@@ -50,3 +51,4 @@ Meteor.startup(function() {
     return true;
   });
 });
+*/
