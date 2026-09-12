@@ -16,6 +16,12 @@ Meteor.publish('decksPublic', function() {
 
 // Single deck + slides
 Meteor.publish('deckSelected', function(deckId) {
+  // only allow access if the deck is owned by the requesting user
+  // or the deck is currently open for public presentation
+  var deck = Decks.findOne(deckId);
+  if (!deck || (deck.owner !== this.userId && !deck.isOpen)) {
+    return [];
+  }
   return [
     Decks.find({_id: deckId}),
     Slides.find({deckId: deckId}),
